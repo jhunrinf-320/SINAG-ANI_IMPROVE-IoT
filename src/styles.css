@@ -2,7 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
 
 /* =========================================
-   1. GLOBAL SETTINGS
+   SINAG-ANI INDUSTRIAL IoT DASHBOARD
+   Complete Responsive Stylesheet
 ========================================= */
 
 :root {
@@ -12,10 +13,11 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 
-  --background: #07101d;
+  --bg: #07101d;
   --sidebar: #0a1423;
   --header: #091321;
   --panel: #101d2e;
+  --panel-light: #17283d;
   --line: #26384e;
   --muted: #91a3ba;
 
@@ -23,6 +25,9 @@
   --cyan: #5ac8ed;
   --orange: #ffb45f;
   --purple: #b79aff;
+  --red: #ff7474;
+
+  --radius: 13px;
 }
 
 * {
@@ -45,7 +50,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
-  background: var(--background);
+  background: var(--bg);
 }
 
 button {
@@ -54,7 +59,7 @@ button {
 }
 
 button:disabled {
-  opacity: 0.42;
+  opacity: .42;
   cursor: not-allowed;
 }
 
@@ -63,15 +68,14 @@ svg {
 }
 
 /* =========================================
-   2. MAIN APPLICATION LAYOUT
+   APPLICATION LAYOUT
 ========================================= */
 
 .shell {
   display: flex;
   width: 100%;
-  min-width: 0;
   min-height: 100vh;
-  background: var(--background);
+  background: var(--bg);
 }
 
 .shell > main {
@@ -82,14 +86,12 @@ svg {
 }
 
 /* =========================================
-   3. SIDEBAR
+   SIDEBAR
 ========================================= */
 
 .sidebar {
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0 auto 0 0;
   z-index: 30;
 
   display: flex;
@@ -110,12 +112,13 @@ svg {
   align-items: center;
   gap: 10px;
   padding: 0 8px;
+  min-height: 42px;
 }
 
 .brand b {
   display: block;
   font: 800 17px Manrope, sans-serif;
-  letter-spacing: 0.07em;
+  letter-spacing: .07em;
 }
 
 .brand small {
@@ -123,13 +126,14 @@ svg {
   margin-top: 3px;
   color: #8396ae;
   font-size: 9px;
-  letter-spacing: 0.17em;
+  letter-spacing: .17em;
 }
 
 .sun {
   position: relative;
   display: grid;
   place-items: center;
+  flex-shrink: 0;
 
   width: 39px;
   height: 39px;
@@ -149,11 +153,10 @@ svg {
 
 .sidebar > label {
   margin: 43px 10px 12px;
-
   color: #657a94;
   font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.15em;
+  letter-spacing: .15em;
 }
 
 .sidebar nav {
@@ -163,7 +166,6 @@ svg {
 
 .sidebar nav button {
   position: relative;
-
   display: flex;
   align-items: center;
   gap: 12px;
@@ -181,7 +183,7 @@ svg {
   font-size: 13px;
   font-weight: 600;
 
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background .2s ease, color .2s ease;
 }
 
 .sidebar nav button:hover {
@@ -197,10 +199,8 @@ svg {
 .sidebar nav button i {
   position: absolute;
   right: 0;
-
   width: 3px;
   height: 22px;
-
   background: var(--green);
   border-radius: 4px 0 0 4px;
 }
@@ -246,12 +246,9 @@ svg {
 .live i,
 .conn-row i {
   display: inline-block;
-
   width: 7px;
   height: 7px;
-
   margin-right: 7px;
-
   background: #718096;
   border-radius: 50%;
 }
@@ -265,7 +262,34 @@ svg {
 }
 
 /* =========================================
-   4. TOP HEADER
+   REMOVE UNWANTED DESKTOP MENU BUTTONS
+========================================= */
+
+@media (min-width: 741px) {
+
+  /* Hamburger button in desktop header */
+  .shell > main > header > button,
+  .shell > main > header > .mobile-menu-toggle,
+  .shell > main > header > .menu-toggle,
+  .shell > main > header > .hamburger {
+    display: none !important;
+  }
+
+  /* Close button beside desktop logo */
+  .sidebar .brand > button,
+  .sidebar .brand > .mobile-close,
+  .sidebar .mobile-close {
+    display: none !important;
+  }
+
+  .sidebar {
+    transform: none !important;
+    visibility: visible !important;
+  }
+}
+
+/* =========================================
+   TOP HEADER
 ========================================= */
 
 .shell > main > header {
@@ -278,7 +302,7 @@ svg {
   gap: 15px;
 
   width: 100%;
-  height: 66px;
+  min-height: 66px;
   padding: 0 32px;
 
   background: var(--header);
@@ -289,7 +313,6 @@ svg {
   display: flex;
   align-items: center;
   gap: 8px;
-
   color: #71849d;
   font-size: 12px;
 }
@@ -306,7 +329,7 @@ svg {
   color: #8eddb8;
   font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.07em;
+  letter-spacing: .07em;
   white-space: nowrap;
 }
 
@@ -315,7 +338,7 @@ svg {
 }
 
 /* =========================================
-   5. MAIN CONTENT
+   MAIN CONTENT
 ========================================= */
 
 .content {
@@ -332,15 +355,13 @@ svg {
   align-items: flex-end;
   justify-content: space-between;
   gap: 15px;
-
-  margin-bottom: 26px;
+  margin-bottom: 28px;
 }
 
 .page-title h1 {
   margin: 0;
-
   font: 800 25px Manrope, sans-serif;
-  letter-spacing: -0.04em;
+  letter-spacing: -.04em;
 }
 
 .page-title h1 span {
@@ -356,12 +377,10 @@ svg {
 
 .device-pill {
   padding: 9px 12px;
-
   color: #a7b8cc;
   background: #0d1a2a;
   border: 1px solid #26384d;
   border-radius: 8px;
-
   font-size: 10px;
   font-weight: 800;
   white-space: nowrap;
@@ -372,7 +391,7 @@ svg {
 }
 
 /* =========================================
-   6. SECTION HEADINGS
+   SECTION HEADINGS
 ========================================= */
 
 .heading {
@@ -380,7 +399,6 @@ svg {
   align-items: flex-end;
   justify-content: space-between;
   gap: 15px;
-
   margin-bottom: 17px;
 }
 
@@ -389,7 +407,7 @@ svg {
   color: #7b91ac;
   font-size: 9px;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: .16em;
 }
 
 .heading h2 {
@@ -412,14 +430,13 @@ svg {
 }
 
 /* =========================================
-   7. SENSOR METRIC CARDS
+   SENSOR METRIC CARDS
 ========================================= */
 
 .metrics {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 13px;
-
+  gap: 14px;
   width: 100%;
   margin-bottom: 14px;
 }
@@ -430,18 +447,24 @@ svg {
 
 .metric {
   min-width: 0;
-  padding: 15px 16px;
+  padding: 16px;
 
   background: linear-gradient(145deg, #122137, #0e1b2b);
-  border: 1px solid #26384e;
-  border-radius: 13px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+
+  transition: border-color .2s ease, transform .2s ease;
+}
+
+.metric:hover {
+  border-color: #405975;
+  transform: translateY(-2px);
 }
 
 .metric-label {
   display: flex;
   align-items: center;
   gap: 9px;
-
   color: #a1b2c7;
   font-size: 11px;
   font-weight: 600;
@@ -450,10 +473,8 @@ svg {
 .metric-label span {
   display: grid;
   place-items: center;
-
-  width: 30px;
-  height: 30px;
-
+  width: 31px;
+  height: 31px;
   background: #1b2c40;
   border-radius: 9px;
 }
@@ -462,11 +483,10 @@ svg {
   display: flex;
   align-items: baseline;
   gap: 7px;
-
-  margin-top: 12px;
+  margin-top: 13px;
 
   font: 800 27px Manrope, sans-serif;
-  letter-spacing: -0.05em;
+  letter-spacing: -.05em;
   font-variant-numeric: tabular-nums;
 }
 
@@ -476,33 +496,33 @@ svg {
 }
 
 .metric p {
-  margin: 5px 0 0;
+  margin: 6px 0 0;
   color: #7f93ac;
   font-size: 10px;
 }
 
 .orange .metric-label span {
-  color: #ffb45f;
+  color: var(--orange);
   background: #3a2c20;
 }
 
 .blue .metric-label span {
-  color: #5ac8ed;
+  color: var(--cyan);
   background: #173444;
 }
 
 .purple .metric-label span {
-  color: #b79aff;
+  color: var(--purple);
   background: #2c2743;
 }
 
 .green .metric-label span {
-  color: #50d69a;
+  color: var(--green);
   background: #19392f;
 }
 
 /* =========================================
-   8. HIGHEST TEMPERATURE DISPLAY
+   HIGHEST TEMPERATURE PANEL
 ========================================= */
 
 .highest-panel {
@@ -512,11 +532,9 @@ svg {
   gap: 22px;
 
   width: 100%;
-  min-width: 0;
   min-height: 124px;
-
   margin: 14px 0 16px;
-  padding: 24px 28px;
+  padding: 23px 28px;
 
   background: linear-gradient(115deg, #172a40, #1b293d);
   border: 1px solid #34455c;
@@ -530,7 +548,6 @@ svg {
   display: grid;
   place-items: center;
   flex-shrink: 0;
-
   width: 60px;
   height: 60px;
 
@@ -554,7 +571,7 @@ svg {
   color: #8298b4;
   font-size: 9px;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: .16em;
 }
 
 .highest-info h3 {
@@ -572,7 +589,7 @@ svg {
   flex-shrink: 0;
   color: #ffbd36;
   font: 800 48px Manrope, sans-serif;
-  letter-spacing: -0.05em;
+  letter-spacing: -.05em;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -583,16 +600,15 @@ svg {
 }
 
 /* =========================================
-   9. DASHBOARD COLUMNS AND PANELS
+   DASHBOARD PANELS
 ========================================= */
 
 .columns {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  gap: 14px;
-
+  gap: 15px;
   width: 100%;
-  margin-top: 14px;
+  margin-top: 15px;
 }
 
 .columns > * {
@@ -602,7 +618,7 @@ svg {
 .panel {
   min-width: 0;
   margin-top: 14px;
-  padding: 18px;
+  padding: 19px;
 
   background: var(--panel);
   border: 1px solid var(--line);
@@ -618,8 +634,7 @@ svg {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 
 .panel-head h3 {
@@ -637,7 +652,7 @@ svg {
 }
 
 /* =========================================
-   10. OPERATING MODE CARDS
+   OPERATING MODE CARDS
 ========================================= */
 
 .modes {
@@ -656,7 +671,7 @@ svg {
   border-radius: 12px;
 
   text-align: left;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: transform .2s ease, border-color .2s ease;
 }
 
 .mode:hover {
@@ -701,7 +716,6 @@ svg {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   margin-top: 10px;
   color: #8de1b8;
   font-size: 10px;
@@ -715,7 +729,6 @@ svg {
   display: flex;
   align-items: center;
   gap: 8px;
-
   margin-top: 14px;
   color: #8fa2b9;
   font-size: 10px;
@@ -727,16 +740,15 @@ svg {
 }
 
 /* =========================================
-   11. STATUS TAGS AND ROWS
+   STATUS TAGS AND ROWS
 ========================================= */
 
 .tag {
   padding: 6px 9px;
   border-radius: 7px;
-
   font-size: 9px;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: .08em;
 }
 
 .tag.ok {
@@ -768,10 +780,8 @@ svg {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-
   padding: 10px 0;
   border-bottom: 1px solid #233449;
-
   font-size: 11px;
 }
 
@@ -793,7 +803,6 @@ svg {
   display: flex;
   align-items: center;
   gap: 9px;
-
   margin-top: 13px;
   padding: 11px 13px;
 
@@ -801,12 +810,11 @@ svg {
   background: #351f29;
   border: 1px solid #75404a;
   border-radius: 9px;
-
   font-size: 11px;
 }
 
 /* =========================================
-   12. TIMERS
+   TIMERS
 ========================================= */
 
 .timers {
@@ -817,7 +825,6 @@ svg {
 
 .timers > div {
   padding: 13px;
-
   background: #0b1726;
   border: 1px solid #25384d;
   border-radius: 10px;
@@ -832,13 +839,12 @@ svg {
 .timers b {
   display: block;
   margin-top: 7px;
-
   font: 800 19px Manrope, sans-serif;
   font-variant-numeric: tabular-nums;
 }
 
 /* =========================================
-   13. CONNECTION STATUS
+   CONNECTION STATUS
 ========================================= */
 
 .conn-row {
@@ -846,7 +852,6 @@ svg {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-
   margin: 11px 0;
   color: #a4b4c8;
   font-size: 11px;
@@ -870,14 +875,13 @@ svg {
 }
 
 /* =========================================
-   14. AUTOMATIC MODE HERO
+   AUTOMATIC MODE HERO
 ========================================= */
 
 .hero {
   display: flex;
   align-items: center;
   gap: 15px;
-
   padding: 19px;
 
   background: linear-gradient(120deg, #163b32, #102738);
@@ -905,7 +909,7 @@ svg {
   color: #a2bdb4;
   font-size: 9px;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: .14em;
 }
 
 .hero-time {
@@ -920,7 +924,7 @@ svg {
 }
 
 /* =========================================
-   15. COMMAND BUTTONS
+   COMMAND BUTTONS
 ========================================= */
 
 .actions {
@@ -945,8 +949,7 @@ svg {
 
   font-size: 11px;
   font-weight: 800;
-
-  transition: filter 0.2s ease;
+  transition: filter .2s ease;
 }
 
 .actions button:hover:not(:disabled) {
@@ -987,7 +990,7 @@ svg {
 }
 
 /* =========================================
-   16. DRYING STAGES
+   DRYING STAGES
 ========================================= */
 
 .stages {
@@ -1000,25 +1003,21 @@ svg {
   display: flex;
   align-items: center;
   gap: 8px;
-
   padding: 11px 9px;
 
   color: #8498b0;
   background: #0c1928;
   border: 1px solid #26384e;
   border-radius: 9px;
-
   font-size: 9px;
 }
 
 .stages span {
   display: grid;
   place-items: center;
-
+  flex-shrink: 0;
   width: 22px;
   height: 22px;
-  flex-shrink: 0;
-
   background: #23364a;
   border-radius: 50%;
 }
@@ -1044,16 +1043,14 @@ svg {
 }
 
 /* =========================================
-   17. AI ADAPTIVE SECTION
+   AI ADAPTIVE
 ========================================= */
 
 .ai-hero {
   padding: 22px;
-
   background:
     radial-gradient(circle at 90% 0%, #3c3262, transparent 40%),
     linear-gradient(130deg, #1d2440, #111e31);
-
   border: 1px solid #4c417b;
   border-radius: 15px;
 }
@@ -1068,19 +1065,17 @@ svg {
 .ai-hero > label {
   display: block;
   margin-top: 20px;
-
   color: #a89ccf;
   font-size: 9px;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: .16em;
 }
 
 .ai-number {
   margin-top: 4px;
   color: #f5f1ff;
-
   font: 800 49px Manrope, sans-serif;
-  letter-spacing: -0.06em;
+  letter-spacing: -.06em;
 }
 
 .ai-number small {
@@ -1099,7 +1094,6 @@ svg {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 9px;
-
   padding-top: 14px;
   border-top: 1px solid #4b426a;
 }
@@ -1124,7 +1118,6 @@ svg {
 .research-note {
   display: flex;
   gap: 11px;
-
   margin-top: 14px;
   padding: 14px;
 
@@ -1150,14 +1143,13 @@ svg {
 }
 
 /* =========================================
-   18. TEMPERATURE CHART
+   CHARTS
 ========================================= */
 
 .chart-stats {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-
   color: #8296af;
   font-size: 10px;
 }
@@ -1181,36 +1173,32 @@ svg {
 
 .empty {
   padding: 28px 15px;
-
   color: #8094ac;
   background: #0c1928;
   border: 1px dashed #30445c;
   border-radius: 10px;
-
   text-align: center;
   font-size: 11px;
 }
 
 /* =========================================
-   19. FOOTER
+   FOOTER
 ========================================= */
 
 footer {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-
   margin-top: 30px;
   padding: 15px 2px 0;
 
   color: #657b95;
   border-top: 1px solid #1d2c40;
-
   font-size: 9px;
 }
 
 /* =========================================
-   20. MOBILE NAVIGATION
+   MOBILE NAVIGATION
 ========================================= */
 
 .mobile-nav {
@@ -1223,17 +1211,17 @@ footer {
 }
 
 /* =========================================
-   21. TABLET RESPONSIVENESS
+   TABLET
 ========================================= */
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (min-width: 741px) {
   .sidebar {
-    width: 205px;
+    width: 215px;
   }
 
   .shell > main {
-    width: calc(100% - 205px);
-    margin-left: 205px;
+    width: calc(100% - 215px);
+    margin-left: 215px;
   }
 
   .content {
@@ -1254,7 +1242,7 @@ footer {
 }
 
 /* =========================================
-   22. MOBILE RESPONSIVENESS
+   MOBILE
 ========================================= */
 
 @media (max-width: 740px) {
@@ -1265,7 +1253,24 @@ footer {
   }
 
   .sidebar {
-    display: none;
+    display: flex;
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 50;
+
+    width: min(285px, 85vw);
+    height: 100dvh;
+
+    transform: translateX(-105%);
+    transition: transform .25s ease;
+  }
+
+  .sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  .sidebar .brand {
+    justify-content: flex-start;
   }
 
   .shell > main {
@@ -1274,7 +1279,7 @@ footer {
   }
 
   .shell > main > header {
-    height: 59px;
+    min-height: 59px;
     padding: 0 14px;
   }
 
@@ -1282,7 +1287,6 @@ footer {
     display: flex;
     align-items: center;
     gap: 8px;
-
     color: #e9f0fa;
     font: 800 13px Manrope, sans-serif;
   }
@@ -1334,7 +1338,7 @@ footer {
 
   .metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 9px;
+    gap: 10px;
   }
 
   .metric {
@@ -1446,7 +1450,7 @@ footer {
 }
 
 /* =========================================
-   23. SMALL PHONE RESPONSIVENESS
+   SMALL PHONES
 ========================================= */
 
 @media (max-width: 420px) {
