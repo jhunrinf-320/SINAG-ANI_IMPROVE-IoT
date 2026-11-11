@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
 
 /* =========================================
-   SINAG-ANI INDUSTRIAL IoT DESIGN
+   1. GLOBAL SETTINGS
 ========================================= */
 
 :root {
@@ -14,8 +14,8 @@
 
   --background: #07101d;
   --sidebar: #0a1423;
+  --header: #091321;
   --panel: #101d2e;
-  --panel-light: #14243a;
   --line: #26384e;
   --muted: #91a3ba;
 
@@ -23,9 +23,6 @@
   --cyan: #5ac8ed;
   --orange: #ffb45f;
   --purple: #b79aff;
-  --red: #ff8585;
-
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
 }
 
 * {
@@ -35,13 +32,19 @@
 html,
 body,
 #root {
-  margin: 0;
-  min-height: 100%;
   width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 body {
   min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
   background: var(--background);
 }
 
@@ -55,51 +58,51 @@ button:disabled {
   cursor: not-allowed;
 }
 
-button:focus-visible {
-  outline: 2px solid var(--green);
-  outline-offset: 3px;
+svg {
+  flex-shrink: 0;
 }
 
 /* =========================================
-   MAIN LAYOUT
+   2. MAIN APPLICATION LAYOUT
 ========================================= */
 
 .shell {
   display: flex;
-  min-height: 100vh;
   width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  background: var(--background);
 }
 
-main {
-  flex: 1;
+.shell > main {
+  flex: 1 1 0;
+  width: calc(100% - 250px);
   min-width: 0;
+  margin-left: 250px;
 }
 
 /* =========================================
-   SIDEBAR
+   3. SIDEBAR
 ========================================= */
 
 .sidebar {
-  width: 245px;
-  min-width: 245px;
-  min-height: 100vh;
-
-  position: sticky;
+  position: fixed;
   top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 30;
 
   display: flex;
   flex-direction: column;
 
+  width: 250px;
+  height: 100vh;
   padding: 25px 15px;
 
-  background: linear-gradient(
-    180deg,
-    #0b1727 0%,
-    #091321 100%
-  );
+  overflow-y: auto;
 
+  background: var(--sidebar);
   border-right: 1px solid #1c2b3d;
-  z-index: 30;
 }
 
 .brand {
@@ -111,34 +114,30 @@ main {
 
 .brand b {
   display: block;
-  font: 800 17px Manrope;
+  font: 800 17px Manrope, sans-serif;
   letter-spacing: 0.07em;
 }
 
 .brand small {
   display: block;
+  margin-top: 3px;
   color: #8396ae;
   font-size: 9px;
   letter-spacing: 0.17em;
-  margin-top: 3px;
 }
 
 .sun {
-  width: 39px;
-  height: 39px;
-  flex-shrink: 0;
-
-  border-radius: 11px;
-
-  background: #2a281e;
-  border: 1px solid #5c4b2b;
-
-  color: #ffc56f;
-
+  position: relative;
   display: grid;
   place-items: center;
 
-  position: relative;
+  width: 39px;
+  height: 39px;
+
+  color: #ffc56f;
+  background: #2a281e;
+  border: 1px solid #5c4b2b;
+  border-radius: 11px;
 }
 
 .sun svg:last-child {
@@ -149,11 +148,12 @@ main {
 }
 
 .sidebar > label {
-  font-size: 10px;
+  margin: 43px 10px 12px;
+
   color: #657a94;
+  font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.15em;
-  margin: 43px 10px 12px;
 }
 
 .sidebar nav {
@@ -162,63 +162,61 @@ main {
 }
 
 .sidebar nav button {
-  height: 44px;
-  width: 100%;
-
-  border: 0;
-  border-radius: 9px;
-
-  background: transparent;
-  color: #9aabc0;
+  position: relative;
 
   display: flex;
   align-items: center;
   gap: 12px;
 
+  width: 100%;
+  height: 46px;
   padding: 0 13px;
-  text-align: left;
 
+  color: #9aabc0;
+  background: transparent;
+  border: 0;
+  border-radius: 9px;
+
+  text-align: left;
   font-size: 13px;
   font-weight: 600;
 
-  position: relative;
-  transition: 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .sidebar nav button:hover {
-  background: #14263a;
   color: #e9f0fa;
+  background: #13263a;
 }
 
 .sidebar nav button.selected {
-  background: #183348;
   color: #7ce1b3;
+  background: #183348;
 }
 
 .sidebar nav button i {
   position: absolute;
   right: 0;
+
   width: 3px;
   height: 22px;
-  border-radius: 4px 0 0 4px;
+
   background: var(--green);
+  border-radius: 4px 0 0 4px;
 }
 
 .device {
-  margin-top: auto;
-
-  border: 1px solid #26374c;
-  border-radius: 11px;
-
-  background: #0e1a2a;
-
-  padding: 12px;
-
   display: flex;
   align-items: center;
   gap: 10px;
 
+  margin-top: auto;
+  padding: 12px;
+
   color: var(--cyan);
+  background: #0e1a2a;
+  border: 1px solid #26374c;
+  border-radius: 11px;
 }
 
 .device b,
@@ -227,20 +225,20 @@ main {
 }
 
 .device b {
-  font-size: 11px;
   color: #e9f0fa;
+  font-size: 11px;
 }
 
 .device small {
-  font-size: 10px;
-  color: #8fa1b8;
   margin-top: 3px;
+  color: #8fa1b8;
+  font-size: 10px;
 }
 
 .cloud-state {
-  font-size: 10px;
-  color: #8295ad;
   padding: 13px 8px 0;
+  color: #8295ad;
+  font-size: 10px;
 }
 
 .cloud-state i,
@@ -248,11 +246,14 @@ main {
 .live i,
 .conn-row i {
   display: inline-block;
+
   width: 7px;
   height: 7px;
-  border-radius: 50%;
-  background: #718096;
+
   margin-right: 7px;
+
+  background: #718096;
+  border-radius: 50%;
 }
 
 .cloud-state i.online,
@@ -263,34 +264,32 @@ main {
   box-shadow: 0 0 0 4px #50d69a1b;
 }
 
-.mobile-close,
-.mobile-menu-button,
-.mobile-brand,
-.sidebar-overlay {
-  display: none;
-}
-
 /* =========================================
-   TOP HEADER
+   4. TOP HEADER
 ========================================= */
 
-header {
-  height: 64px;
-  padding: 0 32px;
-
-  border-bottom: 1px solid #1c2b3d;
-  background: #091321;
+.shell > main > header {
+  position: relative;
+  z-index: 5;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 15px;
+
+  width: 100%;
+  height: 66px;
+  padding: 0 32px;
+
+  background: var(--header);
+  border-bottom: 1px solid #1c2b3d;
 }
 
 .crumb {
   display: flex;
   align-items: center;
   gap: 8px;
+
   color: #71849d;
   font-size: 12px;
 }
@@ -300,44 +299,47 @@ header {
 }
 
 .top-status {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.07em;
-  color: #8eddb8;
-
   display: flex;
   align-items: center;
   gap: 7px;
+
+  color: #8eddb8;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+}
+
+.mobile-brand {
+  display: none;
 }
 
 /* =========================================
-   PAGE CONTENT
+   5. MAIN CONTENT
 ========================================= */
 
 .content {
-  max-width: 1500px;
-  margin: auto;
-  padding: 28px 32px;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+
+  margin: 0;
+  padding: 32px clamp(24px, 3vw, 48px) 45px;
 }
 
 .page-title {
   display: flex;
-  justify-content: space-between;
   align-items: flex-end;
+  justify-content: space-between;
   gap: 15px;
-  margin-bottom: 27px;
-}
 
-.eyebrow {
-  color: #7b91ac;
-  font-size: 9px;
-  letter-spacing: 0.16em;
-  font-weight: 800;
+  margin-bottom: 26px;
 }
 
 .page-title h1 {
-  font: 800 26px Manrope;
-  margin: 5px 0 0;
+  margin: 0;
+
+  font: 800 25px Manrope, sans-serif;
   letter-spacing: -0.04em;
 }
 
@@ -347,19 +349,19 @@ header {
 }
 
 .page-title p {
+  margin: 7px 0 0;
   color: #8fa1b8;
   font-size: 12px;
-  margin: 7px 0 0;
 }
 
 .device-pill {
-  border: 1px solid #26384d;
-  border-radius: 8px;
-  background: #0d1a2a;
-
   padding: 9px 12px;
 
   color: #a7b8cc;
+  background: #0d1a2a;
+  border: 1px solid #26384d;
+  border-radius: 8px;
+
   font-size: 10px;
   font-weight: 800;
   white-space: nowrap;
@@ -370,7 +372,7 @@ header {
 }
 
 /* =========================================
-   SECTION HEADINGS
+   6. SECTION HEADINGS
 ========================================= */
 
 .heading {
@@ -378,44 +380,47 @@ header {
   align-items: flex-end;
   justify-content: space-between;
   gap: 15px;
+
   margin-bottom: 17px;
 }
 
 .heading label,
 .panel-head label {
-  font-size: 9px;
-  letter-spacing: 0.16em;
   color: #7b91ac;
+  font-size: 9px;
   font-weight: 800;
+  letter-spacing: 0.16em;
 }
 
 .heading h2 {
-  font: 800 20px Manrope;
   margin: 5px 0 0;
+  font: 800 20px Manrope, sans-serif;
 }
 
 .heading p {
-  font-size: 12px;
-  color: #91a2b8;
   margin: 6px 0 0;
+  color: #91a2b8;
+  font-size: 12px;
   line-height: 1.5;
 }
 
 .live {
-  font-size: 10px;
   color: #80d9b0;
+  font-size: 10px;
   font-weight: 700;
   white-space: nowrap;
 }
 
 /* =========================================
-   METRIC CARDS
+   7. SENSOR METRIC CARDS
 ========================================= */
 
 .metrics {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 13px;
+
+  width: 100%;
   margin-bottom: 14px;
 }
 
@@ -424,19 +429,12 @@ header {
 }
 
 .metric {
-  background: linear-gradient(
-    145deg,
-    #122137,
-    #0e1b2b
-  );
+  min-width: 0;
+  padding: 15px 16px;
 
+  background: linear-gradient(145deg, #122137, #0e1b2b);
   border: 1px solid #26384e;
   border-radius: 13px;
-
-  padding: 16px;
-
-  min-width: 0;
-  box-shadow: var(--shadow);
 }
 
 .metric-label {
@@ -450,14 +448,14 @@ header {
 }
 
 .metric-label span {
-  width: 31px;
-  height: 31px;
-  border-radius: 9px;
-
-  background: #1b2c40;
-
   display: grid;
   place-items: center;
+
+  width: 30px;
+  height: 30px;
+
+  background: #1b2c40;
+  border-radius: 9px;
 }
 
 .metric-value {
@@ -465,83 +463,81 @@ header {
   align-items: baseline;
   gap: 7px;
 
-  margin-top: 13px;
+  margin-top: 12px;
 
-  font: 800 27px Manrope;
+  font: 800 27px Manrope, sans-serif;
   letter-spacing: -0.05em;
   font-variant-numeric: tabular-nums;
-  overflow-wrap: anywhere;
 }
 
 .metric-value small {
-  font: 500 12px "DM Sans";
   color: #8ea1b8;
+  font: 500 12px "DM Sans", sans-serif;
 }
 
 .metric p {
-  font-size: 10px;
+  margin: 5px 0 0;
   color: #7f93ac;
-  margin: 6px 0 0;
+  font-size: 10px;
 }
 
 .orange .metric-label span {
-  color: var(--orange);
+  color: #ffb45f;
   background: #3a2c20;
 }
 
 .blue .metric-label span {
-  color: var(--cyan);
+  color: #5ac8ed;
   background: #173444;
 }
 
 .purple .metric-label span {
-  color: var(--purple);
+  color: #b79aff;
   background: #2c2743;
 }
 
 .green .metric-label span {
-  color: var(--green);
+  color: #50d69a;
   background: #19392f;
 }
 
 /* =========================================
-   HIGHEST TEMPERATURE
+   8. HIGHEST TEMPERATURE DISPLAY
 ========================================= */
 
 .highest-panel {
   display: flex;
   align-items: center;
-  gap: 19px;
+  justify-content: space-between;
+  gap: 22px;
 
-  padding: 22px 25px;
-  margin: 0 0 15px;
+  width: 100%;
+  min-width: 0;
+  min-height: 124px;
 
-  background: linear-gradient(
-    110deg,
-    #192b40,
-    #142135 65%,
-    #1c2939
-  );
+  margin: 14px 0 16px;
+  padding: 24px 28px;
 
-  border: 1px solid #40536b;
-  border-left: 4px solid #f59e0b;
-  border-radius: 13px;
+  background: linear-gradient(115deg, #172a40, #1b293d);
+  border: 1px solid #34455c;
+  border-left: 4px solid #ffae25;
+  border-radius: 15px;
 
-  box-shadow: var(--shadow);
+  box-shadow: 0 8px 25px #00000012;
 }
 
 .highest-icon {
-  width: 56px;
-  height: 56px;
-  flex-shrink: 0;
-
   display: grid;
   place-items: center;
+  flex-shrink: 0;
 
-  color: #fbbf24;
-  background: #49351b;
-  border: 1px solid #76501d;
-  border-radius: 12px;
+  width: 60px;
+  height: 60px;
+
+  color: #ffc34e;
+  background: #45341f;
+  border: 1px solid #74542b;
+  border-radius: 13px;
 }
 
 .highest-info {
@@ -549,58 +545,68 @@ header {
   min-width: 0;
 }
 
-.highest-info h3 {
-  margin: 6px 0;
-  color: #f1f5f9;
-  font: 700 16px Manrope;
+.highest-info label,
+.highest-info small {
+  display: block;
 }
 
-.highest-info p {
-  margin: 0;
-  color: #9aabc0;
+.highest-info label {
+  color: #8298b4;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.highest-info h3 {
+  margin: 8px 0 5px;
+  color: #f0f4fb;
+  font: 800 17px Manrope, sans-serif;
+}
+
+.highest-info small {
+  color: #9aacc1;
   font-size: 10px;
-  line-height: 1.5;
 }
 
 .highest-value {
-  display: flex;
-  align-items: baseline;
-  gap: 7px;
+  flex-shrink: 0;
+  color: #ffbd36;
+  font: 800 48px Manrope, sans-serif;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
-.highest-value strong {
-  color: #fbbf24;
-  font: 800 clamp(32px, 4vw, 48px) Manrope;
-  letter-spacing: -0.05em;
-  font-variant-numeric: tabular-nums;
-}
-
-.highest-value span {
-  color: #cbd5e1;
+.highest-value small {
+  color: #b9c5d5;
   font-size: 17px;
-  font-weight: 600;
 }
 
 /* =========================================
-   COLUMNS AND PANELS
+   9. DASHBOARD COLUMNS AND PANELS
 ========================================= */
 
 .columns {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
   gap: 14px;
+
+  width: 100%;
   margin-top: 14px;
 }
 
+.columns > * {
+  min-width: 0;
+}
+
 .panel {
+  min-width: 0;
+  margin-top: 14px;
+  padding: 18px;
+
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 18px;
-  min-width: 0;
-  margin-top: 14px;
-  box-shadow: var(--shadow);
 }
 
 .columns .panel {
@@ -609,15 +615,16 @@ header {
 
 .panel-head {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
+
   margin-bottom: 15px;
 }
 
 .panel-head h3 {
-  font: 700 15px Manrope;
   margin: 5px 0 0;
+  font: 700 15px Manrope, sans-serif;
 }
 
 .panel-head small {
@@ -630,47 +637,38 @@ header {
 }
 
 /* =========================================
-   MODE CARDS
+   10. OPERATING MODE CARDS
 ========================================= */
 
 .modes {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 11px;
 }
 
 .mode {
+  min-width: 0;
   min-height: 160px;
+  padding: 14px;
 
+  color: #e9f0fa;
   border: 1px solid #31465c;
   border-radius: 12px;
 
-  padding: 14px;
   text-align: left;
-
-  color: #e9f0fa;
-  transition: 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .mode:hover {
   transform: translateY(-2px);
-  border-color: #6c8ba7;
 }
 
 .mode.auto {
-  background: linear-gradient(
-    140deg,
-    #163a31,
-    #122a2c
-  );
+  background: linear-gradient(140deg, #163a31, #122a2c);
 }
 
 .mode.ai {
-  background: linear-gradient(
-    140deg,
-    #292b50,
-    #19263c
-  );
+  background: linear-gradient(140deg, #292b50, #19263c);
 }
 
 .mode.active {
@@ -688,24 +686,25 @@ header {
 
 .mode b {
   display: block;
-  font: 700 14px Manrope;
   margin-top: 12px;
+  font: 700 14px Manrope, sans-serif;
 }
 
 .mode p {
+  min-height: 30px;
   color: #a5b6ca;
   font-size: 10px;
   line-height: 1.5;
-  min-height: 30px;
 }
 
 .mode strong {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  margin-top: 10px;
   color: #8de1b8;
   font-size: 10px;
-  margin-top: 10px;
 }
 
 .mode.ai strong {
@@ -716,24 +715,25 @@ header {
   display: flex;
   align-items: center;
   gap: 8px;
+
+  margin-top: 14px;
   color: #8fa2b9;
   font-size: 10px;
-  line-height: 1.5;
-  margin-top: 14px;
 }
 
 .note svg {
-  color: var(--green);
   flex-shrink: 0;
+  color: var(--green);
 }
 
 /* =========================================
-   STATUS AND CONNECTIONS
+   11. STATUS TAGS AND ROWS
 ========================================= */
 
 .tag {
-  border-radius: 7px;
   padding: 6px 9px;
+  border-radius: 7px;
+
   font-size: 9px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -765,10 +765,13 @@ header {
 
 .status-row {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
+
   padding: 10px 0;
   border-bottom: 1px solid #233449;
+
   font-size: 11px;
 }
 
@@ -785,11 +788,65 @@ header {
   text-align: right;
 }
 
+.fault,
+.error {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-top: 13px;
+  padding: 11px 13px;
+
+  color: #ffb7b1;
+  background: #351f29;
+  border: 1px solid #75404a;
+  border-radius: 9px;
+
+  font-size: 11px;
+}
+
+/* =========================================
+   12. TIMERS
+========================================= */
+
+.timers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.timers > div {
+  padding: 13px;
+
+  background: #0b1726;
+  border: 1px solid #25384d;
+  border-radius: 10px;
+}
+
+.timers small {
+  display: block;
+  color: #8da1b9;
+  font-size: 10px;
+}
+
+.timers b {
+  display: block;
+  margin-top: 7px;
+
+  font: 800 19px Manrope, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================================
+   13. CONNECTION STATUS
+========================================= */
+
 .conn-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+
   margin: 11px 0;
   color: #a4b4c8;
   font-size: 11px;
@@ -812,89 +869,8 @@ header {
   margin-right: 6px;
 }
 
-.fault,
-.error {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-
-  border: 1px solid #75404a;
-  border-radius: 9px;
-
-  background: #351f29;
-  color: #ffb7b1;
-
-  padding: 11px 13px;
-  font-size: 11px;
-  margin-top: 13px;
-}
-
 /* =========================================
-   TIMER CARDS
-========================================= */
-
-.timers {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.timers > div {
-  background: #0b1726;
-  border: 1px solid #25384d;
-  border-radius: 10px;
-  padding: 13px;
-}
-
-.timers small {
-  display: block;
-  color: #8da1b9;
-  font-size: 10px;
-}
-
-.timers b {
-  display: block;
-  margin-top: 7px;
-  font: 800 19px Manrope;
-  font-variant-numeric: tabular-nums;
-}
-
-.timers.two {
-  margin-top: 14px;
-}
-
-.summary-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.summary-grid > div {
-  background: #0b1726;
-  border: 1px solid #25384d;
-  border-radius: 10px;
-  padding: 14px;
-  min-width: 0;
-}
-
-.summary-grid small,
-.summary-grid b {
-  display: block;
-}
-
-.summary-grid small {
-  color: #8da1b9;
-  font-size: 10px;
-}
-
-.summary-grid b {
-  margin-top: 8px;
-  font: 700 16px Manrope;
-  overflow-wrap: anywhere;
-}
-
-/* =========================================
-   AUTOMATIC MODE
+   14. AUTOMATIC MODE HERO
 ========================================= */
 
 .hero {
@@ -902,40 +878,34 @@ header {
   align-items: center;
   gap: 15px;
 
-  border: 1px solid #2d5949;
-  border-radius: 14px;
-
   padding: 19px;
 
-  background: linear-gradient(
-    120deg,
-    #163b32,
-    #102738
-  );
+  background: linear-gradient(120deg, #163b32, #102738);
+  border: 1px solid #2d5949;
+  border-radius: 14px;
 }
 
 .hero > svg {
   color: #8be4b9;
-  flex-shrink: 0;
 }
 
 .hero h2 {
-  font: 800 20px Manrope;
   margin: 5px 0;
+  font: 800 20px Manrope, sans-serif;
 }
 
 .hero p {
-  font-size: 11px;
-  color: #a8c3bc;
   margin: 0;
+  color: #a8c3bc;
+  font-size: 11px;
 }
 
 .hero label,
 .hero-time small {
-  font-size: 9px;
-  letter-spacing: 0.14em;
   color: #a2bdb4;
+  font-size: 9px;
   font-weight: 800;
+  letter-spacing: 0.14em;
 }
 
 .hero-time {
@@ -945,22 +915,21 @@ header {
 
 .hero-time b {
   display: block;
-  font: 800 19px Manrope;
   margin-top: 5px;
+  font: 800 19px Manrope, sans-serif;
 }
 
 /* =========================================
-   ACTION BUTTONS
+   15. COMMAND BUTTONS
 ========================================= */
 
 .actions {
   display: flex;
-  gap: 9px;
   flex-wrap: wrap;
+  gap: 9px;
 }
 
-.actions button,
-.export-button {
+.actions button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -969,21 +938,19 @@ header {
   min-height: 40px;
   padding: 0 14px;
 
-  border-radius: 9px;
-  border: 1px solid #334960;
-
   color: #e5eef9;
   background: #1a2a3d;
+  border: 1px solid #334960;
+  border-radius: 9px;
 
   font-size: 11px;
   font-weight: 800;
-  transition: 0.2s ease;
+
+  transition: filter 0.2s ease;
 }
 
-.actions button:hover:not(:disabled),
-.export-button:hover {
+.actions button:hover:not(:disabled) {
   filter: brightness(1.2);
-  transform: translateY(-1px);
 }
 
 .actions .start {
@@ -1013,26 +980,19 @@ header {
   border-radius: 2px;
 }
 
-.export-button {
-  color: #91e6bd;
-  border-color: #28654a;
-  background: #14352d;
-}
-
 .feedback {
-  font-size: 10px;
-  line-height: 1.5;
-  color: #8fdfb8;
   margin: 12px 0 0;
+  color: #8fdfb8;
+  font-size: 10px;
 }
 
 /* =========================================
-   STAGE PROGRESS
+   16. DRYING STAGES
 ========================================= */
 
 .stages {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
 }
 
@@ -1043,101 +1003,105 @@ header {
 
   padding: 11px 9px;
 
+  color: #8498b0;
   background: #0c1928;
   border: 1px solid #26384e;
   border-radius: 9px;
 
-  color: #8498b0;
   font-size: 9px;
 }
 
 .stages span {
+  display: grid;
+  place-items: center;
+
   width: 22px;
   height: 22px;
   flex-shrink: 0;
 
-  border-radius: 50%;
   background: #23364a;
-
-  display: grid;
-  place-items: center;
+  border-radius: 50%;
 }
 
 .stages .current {
-  border-color: #57d7a2;
   color: #a4edc9;
   background: #14352d;
+  border-color: #57d7a2;
 }
 
 .stages .current span,
 .stages .done span {
-  background: #2a805d;
   color: white;
+  background: #2a805d;
 }
 
 .stages .done {
   color: #84d9b0;
 }
 
+.two {
+  margin-top: 14px;
+}
+
 /* =========================================
-   AI PAGE
+   17. AI ADAPTIVE SECTION
 ========================================= */
 
 .ai-hero {
-  border: 1px solid #4c417b;
+  padding: 22px;
+
   background:
-    radial-gradient(
-      circle at 90% 0%,
-      #3c3262,
-      transparent 40%
-    ),
+    radial-gradient(circle at 90% 0%, #3c3262, transparent 40%),
     linear-gradient(130deg, #1d2440, #111e31);
 
+  border: 1px solid #4c417b;
   border-radius: 15px;
-  padding: 22px;
 }
 
 .ai-top {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   color: #c7b2ff;
 }
 
 .ai-hero > label {
   display: block;
   margin-top: 20px;
+
   color: #a89ccf;
   font-size: 9px;
-  letter-spacing: 0.16em;
   font-weight: 800;
+  letter-spacing: 0.16em;
 }
 
 .ai-number {
-  font: 800 49px Manrope;
-  color: #f5f1ff;
-  letter-spacing: -0.06em;
   margin-top: 4px;
+  color: #f5f1ff;
+
+  font: 800 49px Manrope, sans-serif;
+  letter-spacing: -0.06em;
 }
 
 .ai-number small {
-  font-size: 20px;
-  color: #b9a8ee;
   margin-left: 5px;
+  color: #b9a8ee;
+  font-size: 20px;
 }
 
 .ai-hero > p {
-  font-size: 11px;
-  color: #aeb4d0;
   margin: 3px 0 17px;
+  color: #aeb4d0;
+  font-size: 11px;
 }
 
 .ai-data {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 9px;
-  border-top: 1px solid #4b426a;
+
   padding-top: 14px;
+  border-top: 1px solid #4b426a;
 }
 
 .ai-data small,
@@ -1146,14 +1110,14 @@ header {
 }
 
 .ai-data small {
-  font-size: 9px;
   color: #a49bc3;
+  font-size: 9px;
 }
 
 .ai-data b {
-  font-size: 11px;
-  color: #f0eaff;
   margin-top: 5px;
+  color: #f0eaff;
+  font-size: 11px;
   overflow-wrap: anywhere;
 }
 
@@ -1161,14 +1125,13 @@ header {
   display: flex;
   gap: 11px;
 
-  padding: 14px;
   margin-top: 14px;
-
-  border-radius: 10px;
-  border: 1px solid #51477a;
-  background: #201d38;
+  padding: 14px;
 
   color: #c2b4f2;
+  background: #201d38;
+  border: 1px solid #51477a;
+  border-radius: 10px;
 }
 
 .research-note svg {
@@ -1180,20 +1143,21 @@ header {
 }
 
 .research-note p {
+  margin: 4px 0 0;
+  color: #b2aacd;
   font-size: 10px;
   line-height: 1.55;
-  color: #b2aacd;
-  margin: 4px 0 0;
 }
 
 /* =========================================
-   CHARTS
+   18. TEMPERATURE CHART
 ========================================= */
 
 .chart-stats {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+
   color: #8296af;
   font-size: 10px;
 }
@@ -1202,63 +1166,33 @@ header {
   color: #e8f0fa;
 }
 
-.chart-scroll {
-  width: 100%;
-  overflow-x: auto;
-}
-
 .chart svg {
   display: block;
   width: 100%;
-  min-width: 500px;
   height: auto;
   margin-top: 8px;
 }
 
-.chart-grid {
-  stroke: #26394f;
-  stroke-dasharray: 4 5;
-}
-
-.chart-label {
-  fill: #8296af;
-  font-size: 10px;
-}
-
-.chart-footer {
-  margin-top: 9px;
+.chart small {
+  display: block;
   color: #71869f;
   font-size: 9px;
 }
 
 .empty {
   padding: 28px 15px;
-  text-align: center;
 
   color: #8094ac;
-  font-size: 11px;
-
   background: #0c1928;
   border: 1px dashed #30445c;
   border-radius: 10px;
-}
 
-.empty svg {
-  display: block;
-  margin: 0 auto 10px;
-}
-
-.empty strong {
-  display: block;
-  color: #b8c8da;
-}
-
-.empty p {
-  margin: 6px 0 0;
+  text-align: center;
+  font-size: 11px;
 }
 
 /* =========================================
-   FOOTER
+   19. FOOTER
 ========================================= */
 
 footer {
@@ -1266,116 +1200,82 @@ footer {
   justify-content: space-between;
   gap: 12px;
 
-  border-top: 1px solid #1d2c40;
-
-  color: #657b95;
-  font-size: 9px;
-
   margin-top: 30px;
   padding: 15px 2px 0;
+
+  color: #657b95;
+  border-top: 1px solid #1d2c40;
+
+  font-size: 9px;
 }
 
 /* =========================================
-   TABLET
+   20. MOBILE NAVIGATION
 ========================================= */
 
-@media (max-width: 1050px) {
+.mobile-nav {
+  display: none;
+}
+
+.mobile-nav button {
+  border: 0;
+  background: transparent;
+}
+
+/* =========================================
+   21. TABLET RESPONSIVENESS
+========================================= */
+
+@media (max-width: 1100px) {
   .sidebar {
     width: 205px;
-    min-width: 205px;
+  }
+
+  .shell > main {
+    width: calc(100% - 205px);
+    margin-left: 205px;
   }
 
   .content {
-    padding: 23px;
+    padding: 25px 22px 35px;
   }
 
   .metrics {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .ai-data {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .highest-value {
+    font-size: 40px;
   }
 }
 
 /* =========================================
-   MOBILE
+   22. MOBILE RESPONSIVENESS
 ========================================= */
 
 @media (max-width: 740px) {
   .shell {
     display: block;
-    padding-bottom: 66px;
+    width: 100%;
+    padding-bottom: 68px;
   }
 
   .sidebar {
-    display: flex;
-
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-
-    width: 270px;
-    min-width: 0;
-    height: 100dvh;
-    min-height: 0;
-
-    transform: translateX(-105%);
-    transition: transform 0.25s ease;
-
-    z-index: 50;
+    display: none;
   }
 
-  .sidebar.sidebar-open {
-    transform: translateX(0);
+  .shell > main {
+    width: 100%;
+    margin-left: 0;
   }
 
-  .sidebar-overlay {
-    display: block;
-
-    position: fixed;
-    inset: 0;
-
-    z-index: 40;
-
-    border: 0;
-    background: rgba(0, 0, 0, 0.55);
-  }
-
-  .mobile-close {
-    display: grid;
-    place-items: center;
-
-    margin-left: auto;
-
-    width: 34px;
-    height: 34px;
-
-    color: #b8c8da;
-    background: #17283d;
-    border: 1px solid #30445c;
-    border-radius: 8px;
-  }
-
-  .mobile-menu-button {
-    display: grid;
-    place-items: center;
-
-    width: 34px;
-    height: 34px;
-
-    border: 1px solid #2c4057;
-    border-radius: 8px;
-
-    color: #c5d5e7;
-    background: #142238;
-  }
-
-  header {
+  .shell > main > header {
     height: 59px;
     padding: 0 14px;
-    gap: 10px;
   }
 
   .mobile-brand {
@@ -1383,7 +1283,8 @@ footer {
     align-items: center;
     gap: 8px;
 
-    font: 800 13px Manrope;
+    color: #e9f0fa;
+    font: 800 13px Manrope, sans-serif;
   }
 
   .mobile-brand .sun {
@@ -1396,7 +1297,6 @@ footer {
   }
 
   .top-status {
-    margin-left: auto;
     font-size: 0;
   }
 
@@ -1406,7 +1306,7 @@ footer {
   }
 
   .content {
-    padding: 19px 13px;
+    padding: 20px 14px 30px;
   }
 
   .page-title {
@@ -1433,6 +1333,7 @@ footer {
   }
 
   .metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 9px;
   }
 
@@ -1445,33 +1346,18 @@ footer {
   }
 
   .highest-panel {
-    gap: 13px;
-    padding: 16px;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 17px;
   }
 
-  .highest-icon {
-    width: 43px;
-    height: 43px;
-  }
-
-  .highest-info h3 {
-    font-size: 13px;
-  }
-
-  .highest-info p {
-    font-size: 9px;
-  }
-
-  .highest-value strong {
-    font-size: 27px;
-  }
-
-  .highest-value span {
-    font-size: 12px;
+  .highest-value {
+    margin-left: auto;
+    font-size: 35px;
   }
 
   .columns {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .panel {
@@ -1479,12 +1365,12 @@ footer {
   }
 
   .modes {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .mode {
-    padding: 11px;
     min-height: 165px;
+    padding: 11px;
   }
 
   .mode b {
@@ -1507,19 +1393,15 @@ footer {
   }
 
   .stages {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .ai-data {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .ai-number {
     font-size: 42px;
-  }
-
-  .summary-grid {
-    grid-template-columns: 1fr;
   }
 
   footer {
@@ -1528,36 +1410,32 @@ footer {
   }
 
   .mobile-nav {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-
     position: fixed;
-    z-index: 35;
-
+    z-index: 40;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
 
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    width: 100%;
     height: 64px;
     padding: 5px 6px;
 
     background: #0a1423f5;
     border-top: 1px solid #26384e;
-
     backdrop-filter: blur(14px);
   }
 
   .mobile-nav button {
-    border: 0;
-    background: transparent;
-    color: #8295ad;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 4px;
 
+    color: #8295ad;
     font-size: 9px;
     font-weight: 700;
   }
@@ -1568,12 +1446,13 @@ footer {
 }
 
 /* =========================================
-   SMALL MOBILE
+   23. SMALL PHONE RESPONSIVENESS
 ========================================= */
 
 @media (max-width: 420px) {
-  .metrics {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .content {
+    padding-right: 12px;
+    padding-left: 12px;
   }
 
   .metric-value {
@@ -1581,16 +1460,24 @@ footer {
   }
 
   .modes {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .mode {
     min-height: 145px;
   }
 
+  .highest-value {
+    font-size: 30px;
+  }
+
+  .highest-info h3 {
+    font-size: 14px;
+  }
+
   .actions {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .actions button {
@@ -1602,11 +1489,7 @@ footer {
     font-size: 16px;
   }
 
-  .highest-panel {
-    flex-wrap: wrap;
-  }
-
-  .highest-value {
-    margin-left: auto;
+  .ai-number {
+    font-size: 36px;
   }
 }
